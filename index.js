@@ -1,18 +1,37 @@
-const { spawn } = require("child_process");
+const fs = require('fs');
+const https = require('https');
+const { spawn } = require('child_process');
 
-const jarPath = __dirname + "/Xbox.jar"; // path to your JAR
-const javaPath = "/usr/bin/java"; // output from `which java`
+const jarUrl = 'https://github.com/MCXboxBroadcast/Broadcaster/releases/download/129/MCXboxBroadcastStandalone.jar';
+const jarPath = './MCXboxBroadcastStandalone.jar';
+const configPath = './config.yml'; // your custom config file
 
-const jar = spawn(javaPath, ["-jar", jarPath], {
-  cwd: __dirname,
-  stdio: "inherit",
-});
+// Download the JAR
+function downloadJar(url, dest) {
+  return new Promise((resolve, reject) => {
+    const file = fs.createWriteStream(dest);
+    https.get(url, (res) => {
+      if (res.statusCode !== 200) return reject(`Failed to download: ${res.statusCode}`);
+      res.pipe(file);
+      file.on('finish', () => file.close(resolve));
+    }).on('error', (err) => reject(err));
+  });
+}
 
-jar.on("error", (err) => {
-  console.error("Failed to start JAR:", err);
-});
+async function run() {
+  if (!fs.existsSync(jarPath)) {
+    console.log('Downloading JAR...');
+    await downloadJar(jarUrl, jarPath);
+    console.log('Download complete.');
+  }
 
-process.on("SIGINT", () => {
-  jar.kill("SIGINT");
-  process.exit();
-});
+  // Run the JAR with custom config
+  const javaArgs = ['-jar', jarPath, '--config', configPath]; // most Java apps allow a --config flag
+  const javaProcess = spawn('java', javaArgs, { stdio: 'inherit' });
+
+  javaProcess.on('close', (code) => {
+    console.log(`Process exited with code ${code}`);
+  });
+}
+
+run().catch(console.error);
