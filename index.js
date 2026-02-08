@@ -4,14 +4,18 @@ const { spawn } = require('child_process');
 
 const jarUrl = 'https://github.com/MCXboxBroadcast/Broadcaster/releases/download/129/MCXboxBroadcastStandalone.jar';
 const jarPath = './MCXboxBroadcastStandalone.jar';
-const configPath = './config.yml'; // your custom config file
+const configPath = './config.yml';
 
-// Download the JAR
 function downloadJar(url, dest) {
   return new Promise((resolve, reject) => {
-    const file = fs.createWriteStream(dest);
     https.get(url, (res) => {
+      // Handle redirect
+      if (res.statusCode === 302 || res.statusCode === 301) {
+        return downloadJar(res.headers.location, dest).then(resolve).catch(reject);
+      }
       if (res.statusCode !== 200) return reject(`Failed to download: ${res.statusCode}`);
+
+      const file = fs.createWriteStream(dest);
       res.pipe(file);
       file.on('finish', () => file.close(resolve));
     }).on('error', (err) => reject(err));
@@ -26,7 +30,7 @@ async function run() {
   }
 
   // Run the JAR with custom config
-  const javaArgs = ['-jar', jarPath, '--config', configPath]; // most Java apps allow a --config flag
+  const javaArgs = ['-jar', jarPath, '--config', configPath];
   const javaProcess = spawn('java', javaArgs, { stdio: 'inherit' });
 
   javaProcess.on('close', (code) => {
