@@ -1,18 +1,20 @@
-FROM node:22-slim
+FROM node:20-slim
 
-# Install Java
-RUN apt-get update && apt-get install -y openjdk-21-jdk-headless && rm -rf /var/lib/apt/lists/*
+# Install Java runtime
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    openjdk-17-jre-headless \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-COPY package*.json ./
-COPY start.sh ./
-COPY index.js ./
-COPY config.yml ./
+# Copy app files
+COPY package.json index.js ./
 
-RUN chmod +x start.sh
-RUN npm install
+# Install dependencies (none currently, but future-proof)
+RUN npm install --production
 
-EXPOSE 25565
+EXPOSE 8080
 
-CMD ["./start.sh"]
+CMD ["node", "index.js"]
