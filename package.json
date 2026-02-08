@@ -1,0 +1,12 @@
+{
+  "name": "mcxboxbroadcast-runner",
+  "version": "1.0.0",
+  "description": "Node.js runner for MCXboxBroadcastStandalone.jar with custom config",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "lildanlid",
+  "license": "MIT",
+  "dependencies": {}
+}
