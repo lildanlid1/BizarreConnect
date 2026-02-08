@@ -20,32 +20,95 @@ let javaPath = "java";
 // EDIT YOUR CONFIG HERE
 // ============================================
 const CUSTOM_CONFIG = `
-# MCXboxBroadcast Configuration
-# Edit these values to your needs
+# Core session settings
+session:
+  # The amount of time in seconds to update session information
+  # Warning: This can be no lower than 20 due to Xbox rate limits
+  update-interval: 30
 
-# The IP and port of the Bedrock server to broadcast
-remote-address: "your-server-ip"
-remote-port: 19132
+  # Should we query the bedrock server to sync the session information
+  query-server: false
 
-# The name that shows up on the Friends tab
-session-name: "My Awesome Server"
+  # This uses checker.geysermc.org for querying if the native ping fails
+  # This can be useful in the case of docker networks or routing problems causing the native ping to fail
+  web-query-fallback: false
 
-# The number of players shown (set to -1 to pull from server)
-player-count: -1
-max-player-count: 20
+  # Fallback to config values if all other server query methods fail
+  config-fallback: false
 
-# The protocol version to use (-1 for auto)
-protocol-version: -1
+  # The data to broadcast over xbox live, this is the default if querying is enabled
+  session-info:
+    # The host name to broadcast
+    host-name: Connect to any server
 
-# How often to update the session (in seconds)
-update-interval: 30
+    # The world name to broadcast
+    world-name: BizarreConnect
 
-# Logging level (INFO, DEBUG, WARNING, ERROR)
-log-level: "INFO"
+    # The current number of players
+    players: 20
 
-# Xbox Live authentication
-# Leave blank to trigger interactive login on first run
-# After first login, tokens are saved automatically
+    # The maximum number of players
+    max-players: 26
+
+    # The IP address of the server
+    ip: lildanlid.falixsrv.me
+
+    # The port of the server
+    port: 22257
+
+# Friend/follower list sync settings
+friend-sync:
+  # The amount of time in seconds to update session information
+  # Warning: This can be no lower than 20 due to Xbox rate limits
+  update-interval: 60
+
+  # Should we automatically follow people that follow us
+  auto-follow: true
+
+  # Should we automatically unfollow people that no longer follow us
+  auto-unfollow: true
+
+  # Should we automatically send an invite when a friend is added
+  initial-invite: true
+
+  # Friend expiry settings
+  expiry:
+    # Should we unfriend people that haven't joined the server in a while
+    enabled: true
+
+    # The amount of time in days before a friend is considered expired
+    days: 15
+
+    # How often to check in seconds for expired friends
+    check: 1800
+
+# Notification settings (e.g., Slack/Discord webhook)
+notifications:
+  # Should we send a message to a slack webhook when the session is updated
+  enabled: false
+
+  # The webhook url to send the message to
+  # If you are using discord add "/slack" to the end of the webhook url
+  webhook-url: ''
+
+  # The message to send when the session is expired and needs to be updated
+  session-expired-message: |-
+    <!here> Xbox Session expired, sign in again to update it.
+
+    Use the following link to sign in: %s
+    Enter the code: %s
+
+  # The message to send when a friend has restrictions in place that prevent them from being friends with our account
+  friend-restriction-message: '%s (%s) has restrictions in place that prevent them from being friends with our account.'
+
+# Enable debug logging
+debug-mode: false
+
+# Suppresses "Updated session!" log into debug
+suppress-session-update-message: false
+
+# Do not change!
+config-version: 2
 `.trim();
 // ============================================
 
