@@ -29,7 +29,7 @@ session:
     max-players: 26
 
     # The IP address of the server
-    ip: "us1.nodesavior.com"
+    ip: 192.99.46.189
 
     # The port of the server
     port: 25576
