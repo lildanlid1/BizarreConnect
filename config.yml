@@ -29,10 +29,10 @@ session:
     max-players: 26
 
     # The IP address of the server
-    ip: lildanlid.falixsrv.me
+    ip: us1.nodesavior.com
 
     # The port of the server
-    port: 22257
+    port: 25576
 
 # Friend/follower list sync settings
 friend-sync:
