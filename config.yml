@@ -29,10 +29,10 @@ session:
     max-players: 26
 
     # The IP address of the server
-    ip: 192.99.46.189
+    ip: 91.197.6.134
 
     # The port of the server
-    port: 25576
+    port: 25665
     
 
 # Friend/follower list sync settings
