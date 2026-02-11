@@ -24,7 +24,7 @@ const CUSTOM_CONFIG = `
 session:
   # The amount of time in seconds to update session information
   # Warning: This can be no lower than 20 due to Xbox rate limits
-  update-interval: 30
+  update-interval: 60
 
   # Should we query the bedrock server to sync the session information
   query-server: false
@@ -51,10 +51,10 @@ session:
     max-players: 26
 
     # The IP address of the server
-    ip: lildanlid.falixsrv.me
+    ip: lildanlid2.progamer.me
 
     # The port of the server
-    port: 22257
+    port: 40280
 
 # Friend/follower list sync settings
 friend-sync:
@@ -69,7 +69,7 @@ friend-sync:
   auto-unfollow: true
 
   # Should we automatically send an invite when a friend is added
-  initial-invite: true
+  initial-invite: false
 
   # Friend expiry settings
   expiry:
@@ -77,7 +77,7 @@ friend-sync:
     enabled: true
 
     # The amount of time in days before a friend is considered expired
-    days: 15
+    days: 7
 
     # How often to check in seconds for expired friends
     check: 1800
