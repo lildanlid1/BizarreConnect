@@ -5,7 +5,7 @@ const path = require("path");
 const { spawn, execSync } = require("child_process");
 
 const JAR_URL =
-  "https://github.com/MCXboxBroadcast/Broadcaster/releases/download/129/MCXboxBroadcastStandalone.jar";
+  "https://github.com/MCXboxBroadcast/Broadcaster/releases/download/130/MCXboxBroadcastStandalone.jar";
 const WORK_DIR = path.join(__dirname, "broadcaster");
 const JAR_PATH = path.join(WORK_DIR, "MCXboxBroadcastStandalone.jar");
 const CONFIG_PATH = path.join(WORK_DIR, "config.yml");
